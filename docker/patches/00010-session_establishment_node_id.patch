@@ -1,0 +1,17 @@
+--- a/src/plugins/upf/upf_pfcp_api.c  2020-12-18 15:41:33.250549473 +0000
++++ b/src/plugins/upf/upf_pfcp_api.c 2020-12-18 15:49:12.653515878 +0000
+@@ -286,8 +286,11 @@
+   SET_BIT (resp.grp.fields, ASSOCIATION_SETUP_RESPONSE_RECOVERY_TIME_STAMP);
+   resp.recovery_time_stamp = psm->start_time;
+ 
+-  SET_BIT (resp.grp.fields, ASSOCIATION_SETUP_RESPONSE_TP_BUILD_ID);
+-  vec_add (resp.tp_build_id, vpe_version_string, strlen (vpe_version_string));
++  // SET_BIT (resp.grp.fields, ASSOCIATION_SETUP_RESPONSE_TP_BUILD_ID);
++  // vec_add (resp.tp_build_id, vpe_version_string, strlen (vpe_version_string));
++
++  SET_BIT (resp.grp.fields, ASSOCIATION_SETUP_RESPONSE_NODE_ID);
++  resp.response.node_id.ip = req->lcl.address;
+ 
+   n = pfcp_get_association (&msg->request.node_id);
+   if (n)
+
