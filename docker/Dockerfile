@@ -4,7 +4,8 @@ LABEL name="upf" \
       description="Image for travelping upf based on VPP"
 
 # Installing hyperscan library for upf plugin
-RUN apt-get update --fix-missing
+#RUN apt-get update --fix-missing
+RUN apt-get update
 RUN apt-get install git tree sudo iptables wget tcpdump iproute2 python3 nano vim net-tools iputils-ping make build-essential htop python3 -y
 RUN wget http://archive.ubuntu.com/ubuntu/pool/universe/h/hyperscan/libhyperscan4_4.7.0-1_amd64.deb \
     http://archive.ubuntu.com/ubuntu/pool/universe/h/hyperscan/libhyperscan-dev_4.7.0-1_amd64.deb
@@ -60,8 +61,10 @@ COPY configs/startup_debug.conf /upf
 # ENTRYPOINT ["./scripts/rc.local"]
 
 
-# docker build -t vpp_upf:u18 docker/
-# docker run  --privileged -ti vpp_upf:u18
+# docker build -t vpp_upg:u18 docker/
+# docker run  --privileged -ti vpp_upg:u18
 # docker exec -it 2a9f009a5af9 /bin/bash
 # ./scripts/rc.local
-# ./pfcpclient -r 172.21.16.2:8805 -s examples/sessions.yaml 
+# ./pfcpclient -r 172.21.16.2:8805 -s examples/sessions.yaml i
+
+ENTRYPOINT ./scripts/rc.local

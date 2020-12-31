@@ -15,3 +15,55 @@
    n = pfcp_get_association (&msg->request.node_id);
    if (n)
 
+@@ -571,15 +574,52 @@
+
+ #define OPT(MSG,FIELD,VALUE,DEFAULT)                                   \
+   ((ISSET_BIT((MSG)->grp.fields, (FIELD))) ? MSG->VALUE : (DEFAULT))
++/**
++ * Translate "foo.com" into "0x3 f o o 0x3 c o m 0x0"
++ * A historical / hysterical micro-TLV scheme. DGMS.
++ */
++static u8 *
++upf_nwi_name_to_labels (u8 * name)
++{
++  int i;
++  int last_label_index;
++  u8 *rv;
++
++  rv = vec_dup (name);
++
++  /* punch in space for the first length */
++  vec_insert (rv, 1, 0);
++  last_label_index = 0;
++  i = 1;
++
++  while (i < vec_len (rv))
++    {
++      if (rv[i] == '.')
++       {
++         rv[last_label_index] = (i - last_label_index) - 1;
++         if ((i - last_label_index) > 63)
++           clib_warning ("stupid name, label length %d",
++                         i - last_label_index);
++         last_label_index = i;
++         rv[i] = 0;
++       }
++      i++;
++    }
++  /* Set the last real label length */
++  rv[last_label_index] = (i - last_label_index) - 1;
++
++  return rv;
++}
+
+ static upf_nwi_t *
+ lookup_nwi (u8 * name)
+ {
+   upf_main_t *gtm = &upf_main;
+   uword *p;
+-
++  
+   assert (name);
+
++  name = upf_nwi_name_to_labels(name);
+   if (pool_elts (gtm->nwis) == 0)
