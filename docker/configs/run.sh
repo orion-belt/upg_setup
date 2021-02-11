@@ -6,8 +6,8 @@ fi
 
 base=$(dirname $0)
 
-APP="$base/build-root/install-vpp_debug-native/vpp/bin/vpp"
-ARGS="-c $base/startup_debug.conf"
+APP="/openair-upf/bin/vpp"
+ARGS="-c /openair-upf/bin/startup_debug.conf"
 
 USAGE="Usage: run.sh [-r] [ debug ]
        debug:	executes vpp under gdb"
@@ -15,7 +15,7 @@ USAGE="Usage: run.sh [-r] [ debug ]
 while getopts ":r" opt; do
     case $opt in
 	r)
-	    APP="$base/build-root/install-vpp-native/vpp/bin/vpp"
+	    APP="/openair-upf/bin/vpp"
 	    ARGS="-c $base/startup.conf"
 	    ;;
 	\?)
