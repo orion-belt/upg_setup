@@ -8,6 +8,10 @@
 
 ```docker run  --privileged -ti vpp_upg:u18```<br>
 
+##########
+Below steps are deprecated and will be updated soon.
+##########
+
 
 ## 2. Networking<br>
 This script will create 4 veth pairs viz. It is veth pair interface, so one end of interface is at vpp-upf and one end at host container.<br>
