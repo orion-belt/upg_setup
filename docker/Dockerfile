@@ -66,12 +66,13 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get upgrade --yes && DE
     tshark \
     openssl \
     libhyperscan-dev \
+    iproute2 \
   && rm -rf /var/lib/apt/lists/*
 
 
 WORKDIR /openair-upf/bin/
 COPY --from=vpp-upf-builder /upf/build-root/install-vpp_debug-native/vpp/bin/vpp .
-COPY --from=vpp-upf-builder /upf/build-root/install-vpp_debug-native/vpp/bin/vpp .
+COPY --from=vpp-upf-builder /upf/build-root/install-vpp_debug-native/vpp/bin/vppctl .
 COPY docker/configs .
 
 WORKDIR /openair-upf/scripts
