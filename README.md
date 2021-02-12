@@ -4,15 +4,10 @@
 
 ```git clone https://github.com/orion-belt/upf_setup.git```
 
-```docker build -t vpp_upg:u18 docker/```
+```docker build -t vpp-upg:latest -f docker/Dockerfile .```
 
 ```docker run  --privileged -ti vpp_upg:u18```<br>
-Or<br>
-You can directly use prebuilt docker image<br>
 
-```docker pull rohankharade/vpp_upg:v1```
-
-```docker run  --privileged -ti rohankharade/vpp_upg:v1```
 
 ## 2. Networking<br>
 This script will create 4 veth pairs viz. It is veth pair interface, so one end of interface is at vpp-upf and one end at host container.<br>
